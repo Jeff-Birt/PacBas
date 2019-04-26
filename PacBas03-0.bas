@@ -1,5 +1,5 @@
 100 rem -----------------------------------------------------------------------
-110 rem PacBas02-9.bas
+110 rem PacBas03-0.bas
 120 rem PacMan type game in C64 BASIC - Proof of concept
 130 rem -----------------------------------------------------------------------
 140 gosub 890: rem initialize all variables
@@ -12,7 +12,7 @@
 210 rem main loop
 220 rem -----------------------------------------------------------------------
 230 rem ****** Move player ************
-240 for i=. to 1000:rem step 0: rem remove 'step 0' to time 1000 loops
+240 for i=. to 1000 step 0: rem remove 'step 0' to time 1000 loops
 250 j=peek(j2):poke py+px,sc:rem read joystick, clear Pac position
 260 rem ** can move north
 270 if (j and js)=. then t=py-yo:if peek(t+px)<>wa then py=t:goto 380
@@ -29,7 +29,7 @@
 380 t=py+px: rem calcualte new Pac screen position
 390 if peek(t)=gf then sr=sr+pl:goto 410:rem inc score if Pac ate pellet
 400 if peek(t)=pb then sr=sr+bn:rem inc score if Pac ate a an * (bonus)
-410 if sr>fs then mg=2:goto 170:rem if scored 100+ we win, set message type 2
+410 if sr>fs then mg=2:goto 170:rem if scored 200+ we win, set message type 2
 420 pt=(pt+1) and w1:poke t,pc(pt):rem poke new position and toggle char
 430 rem ------------------------------------------------------------------------
 440 rem ****** Move Ghost 1 ***********
@@ -61,13 +61,13 @@
 700 rem -----------------------------------------------------------------------
 710 rem promt user to press return key to start
 720 print "{home}score";sr;mg$(mg);" return=start q=quit"
-730 get a$: if a$="q" goto 780
+730 get a$: if a$="q" goto 790
 740 if a$="" goto 730
 750 sr=0:mg=0:print "{home}score";sr;mg$(mg);"                    "
 760 return
 770 rem -----------------------------------------------------------------------
 780 rem clear screen and quit graciously
-790 print chr$(147):print"Thanks for playing!":end
+790 print chr$(147):print"thanks for playing!":end
 800 rem -----------------------------------------------------------------------
 810 rem Definitions of variables
 820 rem Wall CBM ASCII char=160, "<"=60, "="=61, ">"=62, "."=46, "*"=42
