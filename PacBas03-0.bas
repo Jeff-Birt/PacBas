@@ -12,7 +12,7 @@
 210 rem main loop
 220 rem -----------------------------------------------------------------------
 230 rem ****** Move player ************
-240 for i=. to 1000 step 0: rem remove 'step 0' to time 1000 loops
+240 for i=. to 1000:rem step 0: rem remove 'step 0' to time 1000 loops
 250 j=peek(j2):poke py+px,sc:rem read joystick, clear Pac position
 260 rem ** can move north
 270 if (j and js)=. then t=py-yo:if peek(t+px)<>wa then py=t:goto 380
@@ -30,29 +30,29 @@
 390 if peek(t)=gf then sr=sr+pl:goto 410:rem inc score if Pac ate pellet
 400 if peek(t)=pb then sr=sr+bn:rem inc score if Pac ate a an * (bonus)
 410 if sr>fs then mg=2:goto 170:rem if scored 100+ we win, set message type 2
-420 poke t,pc(abs(pt-w1)):rem poke new position and toggle char
+420 pt=(pt+1) and w1:poke t,pc(pt):rem poke new position and toggle char
 430 rem ------------------------------------------------------------------------
 440 rem ****** Move Ghost 1 ***********
 450 rem:goto 660: rem disable ghost for testing
-460 poke gy+gx,gf:n=.:s=.:e=.:w=.:rem poke previous char to old position
+460 gt=gy+gx:poke gt,gf:n=.:s=.:e=.:w=.:rem poke prev. char to old pos
 470 rem can move dir +4, also toward PacMan +1
-480 if peek(gy-yo+gx)<>wa then n=n+w4:if gy>py then n=n+w1
-490 if peek(gy+yo+gx)<>wa then s=s+w4:if gy<py then s=s+w1
-500 if peek(gy+gx+xo)<>wa then e=e+w4:if gx<px then e=e+w1
-510 if peek(gy+gx-xo)<>wa then w=w+w4:if gx>px then w=w+w1
+480 if peek(gt-yo)<>wa then n=n+w4:if gy>py then n=n+w1
+490 if peek(gt+yo)<>wa then s=s+w4:if gy<py then s=s+w1
+500 if peek(gt+w1)<>wa then e=e+w4:if gx<px then e=e+w1
+510 if peek(gt-w1)<>wa then w=w+w4:if gx>px then w=w+w1
 520 rem last direction moved +1, and opposite direction -3
-530 if gl=w1 then n=n+1:s=s-w3:goto 580
-540 if gl=w2 then s=s+1:n=n-w3:goto 580
-550 if gl=w3 then e=e+1:w=w-w3:goto 580
-560 if gl=w4 then w=w+1:w=w-w3:goto 580
+530 if gl=w1 then n=n+w1:s=s-w3:goto 580
+540 if gl=w2 then s=s+w1:n=n-w3:goto 580
+550 if gl=w3 then e=e+w1:w=w-w3:goto 580
+560 if gl=w4 then w=w+w1:w=w-w3:goto 580
 570 rem find largest value n, s, e, w
 580 if n>s then if n>e then if n>w then gy=gy-yo:gl=w1:goto 630
 590 if s>n then if s>e then if s>w then gy=gy+yo:gl=w2:goto 630
-600 if e>w then gx=gx+xo:gl=w3:goto 630
-610 if w>. then gx=gx-xo:gl=w4
+600 if e>w then gx=gx+w1:gl=w3:goto 630
+610 if w>. then gx=gx-w1:gl=w4
 620 rem calc. ghost pos., save char. under new pos. to restore later
 630 gt=gy+gx:gf = peek(gt):poke gt,gh
-640 if gt = py+px then mg=1:goto 170: rem got munched!
+640 if gt=t then mg=1:goto 170: rem got munched!
 650 rem go to top left corner of screen and print score
 660 print "{home}score";sr
 670 next i
@@ -82,10 +82,10 @@
 910 rem-----------------------------------------------------------------------
 920 rem initialize variables that get reset on each level
 930 TIME$ = "000000"   :rem reset clock
-940 xo=1:yo=40:w4=4:w2=2:w1=1:rem X,y move offsets, weight constants
+940 yo=40:w4=4:w2=2:w1=1:rem X,y move offsets, weight constants xo=1:
 950 jn=2:js=1:je=4:jw=8: rem joystick bits
 960 n=.:s=.:e=.:w=.:rem direction bias counters
-970 px=.:py=.:pt=.:pb=42: rem Pac x,y,temp, screen char
+970 px=.:py=.:pt=.:pb=42:t=.: rem Pac x,y,last pac char, screen char, temp
 980 gx=.:gy=.:gt=.:gl=3:gf=46:rem ghost x,y,temp,last move dir, screen char
 990 pl=1:bn=25:fs=199:rem pellet and bonus score vales, finsish score
 1000 pc(0)=61:pc(1)=60:rem pac screen characters
