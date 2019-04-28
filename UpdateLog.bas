@@ -19,4 +19,5 @@
 280 rem PacBas02-7.bas keep ghost from eating pellets, warp tunnels (311 lt)
 290 rem PacBas02-8.bas add proper game over (331 lt)
 300 rem PacBas02-9.bas clean up variables (337 lt)
-310 rem PacBas03-0.bas add 'q' to quit option
+310 rem PacBas03-0.bas add 'q' to quit option (335 lt)
+320 rem PacBas03-1.bas try a differnet player movement routine (329 lt)

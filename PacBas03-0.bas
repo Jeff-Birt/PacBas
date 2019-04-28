@@ -12,7 +12,7 @@
 210 rem main loop
 220 rem -----------------------------------------------------------------------
 230 rem ****** Move player ************
-240 for i=. to 1000 step 0: rem remove 'step 0' to time 1000 loops
+240 for i=. to 1000:rem step 0: rem remove 'step 0' to time 1000 loops
 250 j=peek(j2):poke py+px,sc:rem read joystick, clear Pac position
 260 rem ** can move north
 270 if (j and js)=. then t=py-yo:if peek(t+px)<>wa then py=t:goto 380
